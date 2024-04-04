@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface JobCardProps {
   job: {
@@ -12,6 +13,8 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
+  const { data: session } = useSession();
+  const isHiringManager = session?.user?.role === "HIRING_MANAGER";
   return (
     <Card>
       <CardContent>
@@ -20,9 +23,16 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         </Typography>
         <Typography color="textSecondary">{job.company}</Typography>
         <Typography color="textSecondary">{job.location}</Typography>
-        <Link href={`/jobs/${job.id}`}>
-          <Button variant="contained" color="primary">
-            View Details
+        <Link
+          href={
+            isHiringManager
+              ? `/dashboard/hiring-manager/jobs/${job.id}`
+              : `/jobs/${job.id}`
+          }
+          passHref
+        >
+          <Button variant="contained" color="primary" component="a">
+            {isHiringManager ? "Edit Job" : "Apply for Job"}
           </Button>
         </Link>
       </CardContent>

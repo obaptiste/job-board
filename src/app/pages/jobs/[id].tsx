@@ -2,31 +2,44 @@ import { GetServerSideProps } from "next";
 import prisma from "@/app/lib/prisma";
 import { Job } from "@prisma/client";
 import { Container, Typography, Button } from "@mui/material";
+import ApplicationForm from "@/app/components/Job/ApplicationForm";
+import { createApplication } from "../../lib/application";
 
 interface JobDetailsPageProps {
   job: Job;
 }
 
 const JobDetailsPage: React.FC<JobDetailsPageProps> = ({ job }) => {
-  return (
-    <Container maxWidth="md">
-      <Typography variant="h4" component="h1" gutterBottom>
-        {job.title}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        {job.company}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        {job.location}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        {job.description}
-      </Typography>
-      <Button variant="contained" color="primary">
-        Apply
-      </Button>
-    </Container>
-  );
+  const handleApplicationSubmit = async (data: {
+    resume: FileList;
+    coverLetter: string;
+  }) => {
+    try {
+      await createApplication(job.id, data.resume[0], data.coverLetter);
+    } catch (error) {
+      console.error("Error submitting application: ", error);
+    }
+  };
+
+  return;
+  <Container maxWidth="md">
+    <Typography variant="h4" component="h1" gutterBottom>
+      {job.title}
+    </Typography>
+    <Typography variant="body1" gutterBottom>
+      {job.company}
+    </Typography>
+    <Typography variant="body1" gutterBottom>
+      {job.location}
+    </Typography>
+    <Typography variant="body1" gutterBottom>
+      {job.description}
+    </Typography>
+    <ApplicationForm jobId={job.id} onSubmit={handleApplicationSubmit} />
+    <Button variant="contained" color="primary">
+      Apply
+    </Button>
+  </Container>;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {

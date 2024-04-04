@@ -23,7 +23,7 @@ const MyDrawer: React.FC = () => {
     {
       label: "Dashboard",
       icon: <DashboardIcon />,
-      link: "/dashboard",
+      link: "/dashboard/applicant",
     },
     {
       label: "Jobs",
