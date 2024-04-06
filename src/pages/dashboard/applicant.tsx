@@ -1,9 +1,9 @@
 import { GetServerSideProps } from "next";
-import prisma from "../../lib/prisma";
+import prisma from "../../app/lib/prisma";
 import { Application, Job } from "@prisma/client";
 import { Container, Typography, Grid } from "@mui/material";
 import { getSession } from "next-auth/react";
-import JobCard from "../../components/Job/JobCard";
+import JobCard from "../../app/components/Job/JobCard";
 
 interface ApplicantDashboardProps {
   applications: (Application & {

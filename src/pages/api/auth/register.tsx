@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Container, Typography, TextField, Button } from "@mui/material";
-import { registerUser } from "../../../lib/auth";
+import { registerUser } from "../../../app/lib/auth";
 
 interface RegisterFormData {
   name: string;

@@ -3,7 +3,7 @@ import prisma from "@/app/lib/prisma";
 import { Job } from "@prisma/client";
 import { Container, Typography, Button } from "@mui/material";
 import ApplicationForm from "@/app/components/Job/ApplicationForm";
-import { createApplication } from "../../lib/application";
+import { createApplication } from "../../app/lib/application";
 
 interface JobDetailsPageProps {
   job: Job;
@@ -21,25 +21,26 @@ const JobDetailsPage: React.FC<JobDetailsPageProps> = ({ job }) => {
     }
   };
 
-  return;
-  <Container maxWidth="md">
-    <Typography variant="h4" component="h1" gutterBottom>
-      {job.title}
-    </Typography>
-    <Typography variant="body1" gutterBottom>
-      {job.company}
-    </Typography>
-    <Typography variant="body1" gutterBottom>
-      {job.location}
-    </Typography>
-    <Typography variant="body1" gutterBottom>
-      {job.description}
-    </Typography>
-    <ApplicationForm jobId={job.id} onSubmit={handleApplicationSubmit} />
-    <Button variant="contained" color="primary">
-      Apply
-    </Button>
-  </Container>;
+  return (
+    <Container maxWidth="md">
+      <Typography variant="h4" component="h1" gutterBottom>
+        {job.title}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        {job.company}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        {job.location}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        {job.description}
+      </Typography>
+      <ApplicationForm jobId={job.id} onSubmit={handleApplicationSubmit} />
+      <Button variant="contained" color="primary">
+        Apply
+      </Button>
+    </Container>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {

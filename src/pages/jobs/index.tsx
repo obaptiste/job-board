@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
-import prisma from "../../lib/prisma";
+import prisma from "../../app/lib/prisma";
 import { Job } from "@prisma/client";
 import { Container, Typography, Grid } from "@mui/material";
-import JobCard from "../../components/Job/JobCard";
+import JobCard from "../../app/components/Job/JobCard";
 
 interface JobsPageProps {
   jobs: Job[];

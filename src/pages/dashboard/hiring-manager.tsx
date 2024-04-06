@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
-import prisma from "../../lib/prisma";
+import prisma from "../../app/lib/prisma";
 import { Application, Job, User } from "@prisma/client";
 import { Container, Typography, Grid, Button } from "@mui/material";
 import { getSession } from "next-auth/react";
-import JobCard from "../../components/Job/JobCard";
-import { updateApplicationStatus } from "../../lib/application";
+import JobCard from "../../app/components/Job/JobCard";
+import { updateApplicationStatus } from "../../app/lib/application";
 
 interface HiringManagerDashboardProps {
   jobs: (Job & {
