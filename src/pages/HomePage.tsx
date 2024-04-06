@@ -13,17 +13,11 @@ import {
   CircularProgress,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { GetServerSideProps } from "next";
-import prisma from "../app/lib/prisma";
 import { Job } from "@prisma/client";
-import JobCard from "../app/components/Job/JobCard";
+import { HomePageProps } from ".";
 
-interface HomePageProps {
-  initialJobs: Job[];
-}
-
-const HomePage = ({ initialJobs }: HomePageProps) => {
-  const [jobs, setJobs] = useState<Job[]>([]);
+export const HomePage = ({ initialJobs }: HomePageProps) => {
+  const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -90,12 +84,33 @@ const HomePage = ({ initialJobs }: HomePageProps) => {
           </Button>
         </Box>
       </Box>
-      <Box mt={4} className="jobs-container">
+      <Box mt={4}>
         <Grid container spacing={3}>
-          {jobs.length && jobs.map((job) => <JobCard key={job.id} job={job} />)}
-          {initialJobs.length &&
-            //TODO: swap initial jobs object with jobs state
-            initialJobs.map((job) => <JobCard key={job.id} job={job} />)}
+          {jobs &&
+            jobs?.map((job) => (
+              <Grid item xs={12} sm={6} md={4} key={job.id}>
+                <Card
+                  style={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box>
+                    <Typography variant="h5">{job.title}</Typography>
+                    <Typography variant="subtitle1">{job.company}</Typography>
+                    <Typography variant="body1">{job.location}</Typography>
+                    <Typography variant="body2">{job.description}</Typography>
+                  </Box>
+                  <Box mt={2}>
+                    <Button variant="contained" color="primary">
+                      Apply
+                    </Button>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
         </Grid>
       </Box>
       <Backdrop open={loading} style={{ zIndex: 999 }}>
@@ -104,26 +119,3 @@ const HomePage = ({ initialJobs }: HomePageProps) => {
     </Box>
   );
 };
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const jobs = await prisma.job.findMany();
-
-  // Convert each job to a serializable format
-  const serializableJobs = jobs.map((job) => {
-    return {
-      ...job,
-      // Assuming `createdAt` and `updatedAt` are the Date fields
-      // Convert them to ISO strings. Adjust field names as necessary.
-      createdAt: job.createdAt?.toISOString(),
-      updatedAt: job.updatedAt?.toISOString(),
-    };
-  });
-
-  return {
-    props: {
-      initialJobs: serializableJobs,
-    },
-  };
-};
-
-export default HomePage;

@@ -14,7 +14,7 @@ interface JobCardProps {
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
   const { data: session } = useSession();
-  const isHiringManager = session?.user?.role === "HIRING_MANAGER";
+  const isHiringManager = session?.user?.role?.name === "hiring_manager";
   return (
     <Card>
       <CardContent>
