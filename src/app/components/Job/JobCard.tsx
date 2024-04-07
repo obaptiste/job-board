@@ -31,7 +31,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
           }
           passHref
         >
-          <Button variant="contained" color="primary" component="a">
+          <Button variant="contained" color="primary" component="button">
             {isHiringManager ? "Edit Job" : "Apply for Job"}
           </Button>
         </Link>

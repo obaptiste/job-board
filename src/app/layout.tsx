@@ -1,6 +1,6 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme";
+import { lightTheme, darkTheme } from "../theme";
 //import "../styles/globals.css"
 import {
   ReactElement,
@@ -28,7 +28,7 @@ export default function RootLayout(props: {
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          {<ThemeProvider theme={theme}>{props.children}</ThemeProvider>}
+          {<ThemeProvider theme={lightTheme}>{children}</ThemeProvider>}
         </AppRouterCacheProvider>
       </body>
     </html>

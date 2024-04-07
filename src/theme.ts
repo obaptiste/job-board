@@ -1,6 +1,8 @@
 'use client';
 import { Roboto } from 'next/font/google';
-import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
+import { createTheme, ThemeOptions } from '@mui/material/styles';
+import { OverridableStringUnion } from '@mui/types';
+import { ButtonPropsVariantOverrides } from '@mui/material/Button';
 
 const roboto = Roboto({
     weight: ['300', '400', '500', '700'],
@@ -8,77 +10,82 @@ const roboto = Roboto({
     display: 'swap',
 });
 
-const theme = extendTheme({
-    colorSchemes: {
-        light: {
-            palette: {
-                primary: {
-                    main: '#4CAF50', // A vibrant green
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                secondary: {
-                    main: '#E91E63', // A bold pink
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                error: {
-                    main: '#F44336', // A bright red
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                warning: {
-                    main: '#FF9800', // An energetic orange
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                info: {
-                    main: '#2196F3', // A clear blue
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                success: {
-                    main: '#4CAF50', // The same vibrant green as primary
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-            },
-        },
-        dark: {
-            palette: {
-                primary: {
-                    main: '#9CCC65', // A lighter green for dark mode
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                secondary: {
-                    main: '#F06292', // A softer pink for dark mode
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                error: {
-                    main: '#EF9A9A', // A warmer red for dark mode
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                warning: {
-                    main: '#FFCC80', // A more muted orange for dark mode
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                info: {
-                    main: '#64B5F6', // A calmer blue for dark mode
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-                success: {
-                    main: '#9CCC65', // The same lighter green as primary
-                    contrastText: '#FFFFFF', // White text for contrast
-                },
-            },
-        },
-    },
+const baseTheme: ThemeOptions = {
     typography: {
-        fontFamily: roboto.style.fontFamily,
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     },
     components: {
         MuiButton: {
             defaultProps: {
-                variant: 'contained',
+                variant: 'contained' as OverridableStringUnion<
+                    'contained' | 'text' | 'outlined',
+                    ButtonPropsVariantOverrides
+                >,
             },
+        },
+    },
+};
+
+const lightTheme: ThemeOptions = createTheme({
+    ...baseTheme,
+    palette: {
+        mode: 'light',
+        primary: {
+            main: '#64B5F6',
+            contrastText: '#FFFFFF',
+        },
+        secondary: {
+            main: '#81C784',
+            contrastText: '#FFFFFF',
+        },
+        error: {
+            main: '#E57373',
+            contrastText: '#FFFFFF',
+        },
+        warning: {
+            main: '#FFB74D',
+            contrastText: '#FFFFFF',
+        },
+        info: {
+            main: '#4FC3F7',
+            contrastText: '#FFFFFF',
+        },
+        success: {
+            main: '#81C784',
+            contrastText: '#FFFFFF',
         },
     },
 });
 
+const darkTheme: ThemeOptions = createTheme({
+    ...baseTheme,
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#2196F3', // A deep, vibrant blue
+            contrastText: '#FFFFFF',
+        },
+        secondary: {
+            main: '#9CCC65', // A muted, earthy green
+            contrastText: '#FFFFFF',
+        },
+        error: {
+            main: '#EF9A9A', // A warm, muted red
+            contrastText: '#FFFFFF',
+        },
+        warning: {
+            main: '#FFB74D', // A golden, metallic orange
+            contrastText: '#FFFFFF',
+        },
+        info: {
+            main: '#64B5F6', // A calmer, more subdued blue
+            contrastText: '#FFFFFF',
+        },
+        success: {
+            main: '#9CCC65', // The same muted, earthy green as secondary
+            contrastText: '#FFFFFF',
+        },
+    },
+});
 
-
-export default theme;
+export { lightTheme, darkTheme };
