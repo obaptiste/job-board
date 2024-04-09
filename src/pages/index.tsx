@@ -68,10 +68,9 @@ const HomePage = ({ initialJobs }: HomePageProps) => {
         onChange={(e) => setFilterTerm(e.target.value as string)}
         style={{ marginLeft: "1rem" }}
       >
-        <MenuItem value="">All</MenuItem>
-        <MenuItem value="full-time">Full-time</MenuItem>
-        <MenuItem value="part-time">Part-time</MenuItem>
-        <MenuItem value="remote">Remote</MenuItem>
+        <MenuItem value="Developer">Developer</MenuItem>
+        <MenuItem value="Designer">Designer</MenuItem>
+        <MenuItem value="Other">Other</MenuItem>
       </Select>
       {error && <div>Error: {error}</div>}
       <Grid container spacing={2}>

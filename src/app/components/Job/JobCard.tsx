@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-interface JobCardProps {
+export interface JobCardProps {
   job: {
     id: number;
     title: string;

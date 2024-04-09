@@ -22,5 +22,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "prisma/seed.mjs"],
-  "exclude": ["node_modules"]
-}
+  "exclude": ["node_modules"],
+  "types": ["@testing-library/jest-dom"]}

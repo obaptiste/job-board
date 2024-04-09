@@ -22,24 +22,24 @@ export default async function handler(
 ) {
     if (req.method === 'GET') {
         try {
-            const { search = '', filter = '' } = req.query;
+            const { searchTerm = '', filterTerm = '' } = req.query;
 
             let whereClause = {};
 
-            if (search) {
+            if (searchTerm) {
                 whereClause = {
                     ...whereClause,
                     title: {
-                        contains: Array.isArray(search) ? search[0] : search,
+                        contains: Array.isArray(searchTerm) ? searchTerm[0] : searchTerm,
                         mode: 'insensitive',
                     },
                 };
             }
 
-            if (filter) {
+            if (filterTerm) {
                 whereClause = {
                     ...whereClause,
-                    type: Array.isArray(filter) ? filter[0] : filter,
+                    type: Array.isArray(filterTerm) ? filterTerm[0] : filterTerm,
                 };
             }
 
