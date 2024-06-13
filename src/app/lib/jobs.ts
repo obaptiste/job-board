@@ -22,7 +22,7 @@ export const createJob = async (data: {
         },
     });
 
-    if (!user || user.role.name !== 'HIRING_MANAGER') {
+    if (!user || user.role.name !== 'hiring_manager') {
         throw new Error('You do not have permission to create job listings.');
     }
 

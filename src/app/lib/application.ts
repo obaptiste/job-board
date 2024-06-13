@@ -34,11 +34,40 @@ export const createApplication = async (
             applicantId: user.id,
             resume: resumeUrl,
             coverLetter,
+            statusId: 1
+        },
+        include: {
+            job: true,
         },
     });
 
     return application;
 };
+
+export async function updateApplicationStatus(applicationId: number, statusName: string) {
+    //First, find the applicationStatus record that matches the statusName
+    const status = await prisma.applicationStatus.findFirst({
+        where: {
+            name: statusName,
+        },
+    });
+
+    if (!status) {
+        throw new Error(`Status '${statusName}' not found`);
+    }
+
+    const updatedApplication = await prisma.application.update({
+        where: {
+            id: applicationId,
+        },
+        data: {
+            statusId: status.id,
+        },
+    });
+
+    return updatedApplication;
+
+}
 
 const uploadResume = async (resume: File): Promise<string> => {
     // Logic for uploading the resume to a file storage service
